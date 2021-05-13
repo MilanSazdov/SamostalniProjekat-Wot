@@ -1889,6 +1889,7 @@ public:
         volume = volume_;
     }
 
+private: // Cisto da bi bila apstraktna klasa, ova funkcija nista ne radi, posto nam ne treba funkcionalnost
     virtual void Fire() = 0;
 };
 

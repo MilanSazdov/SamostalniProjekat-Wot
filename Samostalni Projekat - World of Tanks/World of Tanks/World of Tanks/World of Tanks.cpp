@@ -1846,43 +1846,96 @@ protected:
     double heigth;
     double surface;
     double volume;
-    
+
+public:
+
+    double getHealth()const {
+        return health;
+    }
+
+    double getWeight()const {
+        return weight;
+    }
+
+    double getHeight()const {
+        return heigth;
+    }
+
+    double getSurface()const {
+        return surface;
+    }
+
+    double getVolume()const {
+        return volume;
+    }
+
+    void setHealth(double health_) {
+        health = health_;
+    }
+
+    void setWeight(double weight_) {
+        weight = weight_;
+    }
+
+    void setHeigth(double heigth_) {
+        heigth = heigth_;
+    }
+
+    void setSurface(double surface_) {
+        surface = surface_;
+    }
+
+    void setVolume(double volume_) {
+        volume = volume_;
+    }
+
+    virtual void Fire() = 0;
 };
 
-class Radio {
+class Radio : public TankModuo{
 
 private:
 
     double range; // Koliko metara linijski 
-    double weight;
     double radius; // radijus koji moze da cuje
 
 public:
 
     Radio() {
+
+        health = 200;
+        weight = 120;
+        heigth = 1.40;
+        surface = 200;
+        volume = 95;
         range = 1400.76;
-        weight = 110.31;
         radius = 730.43;
     }
 
-    Radio(double Range, double Weight, double radiuss) {
+    Radio(double Range, double radiuss, double health_, double weight_, double heigth_, double surface_, double volume_) {
+        
+        health = health_;
+        weight = weight_;
+        heigth = heigth_;
+        surface = surface_;
+        volume = volume_;
         range = Range;
-        weight = Weight;
         radius = radiuss;
     }
 
     Radio(Radio& radio) {
-        range = radio.range;
+       
+        health = radio.health;
         weight = radio.weight;
+        heigth = radio.heigth;
+        surface = radio.surface;
+        volume = radio.volume;
+        range = radio.range;
         radius = radio.radius;
     }
     
     void setRange(double Range) {
         range = Range;
-    }
-
-    void setWeight(double Weight) {
-        weight = Weight;
     }
 
     void setRadius(double Radius) {
@@ -1893,10 +1946,6 @@ public:
         return range;
     }
 
-    double getWeight()const {
-        return weight;
-    }
-
     double getRadius()const {
         return radius;
     }
@@ -1904,21 +1953,30 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Radio& r) {
 
         os<<"RADIO :" << std::endl;
+        os << "Health : " << r.health << std::endl;
+        os << "Weight : " << r.weight << std::endl;
+        os << "Heigth : " << r.heigth << std::endl;
+        os << "Surface :" << r.surface << std::endl;
+        os << "Volume : " << r.volume << std::endl;
         os << "Range : " << r.range << std::endl;
         os << "Radius :" << r.radius << std::endl;
-        os << "Weight : " << r.weight << std::endl;
+       
         return os;
+    }
+
+private:
+    void Fire() {
+
     }
 };
 
-class Track {
+class Track : public TankModuo{
 
 private:
 
     double TraverseSpeed; // u stepenima
     double MaxLoad; // izdrzljivost nosenja 
     double durabillity;
-    double weight;
     double length;
     int NumberOfParts;
 
@@ -1926,6 +1984,11 @@ public:
 
     Track() {
 
+        health = 500;
+        weight = 1320;
+        heigth = 140.53;
+        surface = 200;
+        volume = 95;
         TraverseSpeed = 67.785;
         MaxLoad = 2567.43;
         durabillity = 45.32;
@@ -1934,18 +1997,27 @@ public:
         NumberOfParts = 112;
     }
 
-    Track(double traverse_speed, double max_load, double Durabillity, double Weight, double Length, int number_of_parts) {
+    Track(double traverse_speed, double max_load, double Durabillity, double Length, int number_of_parts, double health_, double weight_, double heigth_, double surface_, double volume_ ) {
 
+        health = health_;
+        weight = weight_;
+        heigth = heigth_;
+        surface = surface_;
+        volume = volume_;
         TraverseSpeed = traverse_speed;
         MaxLoad = max_load;
         durabillity = Durabillity;
-        weight = Weight;
         length = Length;
         NumberOfParts = number_of_parts;
     }
 
     Track(Track& track) {
 
+        health = track.health;
+        weight = track.weight;
+        heigth = track.heigth;
+        surface = track.surface;
+        volume = track.volume;
         TraverseSpeed = track.TraverseSpeed;
         MaxLoad = track.MaxLoad;
         durabillity = track.durabillity;
@@ -2014,21 +2086,28 @@ public:
         os << "Traverse speed: " << t.TraverseSpeed << std::endl;
         os << "Max load: " << t.MaxLoad << std::endl;
         os << "Durability: " << t.durabillity << std::endl;
-        os << "Weight : " << t.weight << std::endl;
         os << "Length: " << t.length << std::endl;
         os << "Number of parts: " << t.NumberOfParts << std::endl;
+        os << "Health : " << t.health << std::endl;
+        os << "Weight : " << t.weight << std::endl;
+        os << "Heigth : " << t.heigth << std::endl;
+        os << "Surface :" << t.surface << std::endl;
+        os << "Volume : " << t.volume << std::endl;
         return os;
     }
 
+    private:
+        void Fire() {
+
+        }
 };
 
-class Motor {
+class Motor : public TankModuo{
 
 private:
 
     double power;
     double FireChance; // sanse da se zapali 
-    double weight;
     double MaxSpeed;
     double MaxReverseSpeed;
     int NumberOfGears; // kasnije moze da se uvede funkcionalnost, primer kao sa kolima
@@ -2037,6 +2116,11 @@ public:
 
     Motor() {
         
+        health = 600;
+        weight = 1200;
+        heigth = 3.05;
+        surface = 1321;
+        volume = 31;
         power = 56.79;
         FireChance = 32.897;
         weight = 320.41;
@@ -2045,11 +2129,15 @@ public:
         NumberOfGears = 5;
     }
 
-    Motor(double Power, double fire_chance, double Weight, double max_speed, double max_reverse_speed, int number_of_gears) {
+    Motor(double Power, double fire_chance, double max_speed, double max_reverse_speed, int number_of_gears, double health_, double weight_, double heigth_, double surface_, double volume_) {
             
+        health = health_;
+        weight = weight_;
+        heigth = heigth_;
+        surface = surface_;
+        volume = volume_;
         power = Power;
         FireChance = fire_chance;
-        weight = Weight;
         MaxSpeed = max_speed;
         MaxReverseSpeed = max_reverse_speed;
         NumberOfGears = number_of_gears;
@@ -2057,6 +2145,11 @@ public:
 
     Motor(Motor& motor) {
 
+        health = motor.health;
+        weight = motor.weight;
+        heigth = motor.heigth;
+        surface = motor.surface;
+        volume = motor.volume;
         power = motor.power;
         FireChance = motor.FireChance;
         weight = motor.weight;
@@ -2071,10 +2164,6 @@ public:
 
     void setFireChance(double fire_chance) {
         FireChance = fire_chance;
-    }
-
-    void setWeight(double Weight) {
-        weight = Weight;
     }
 
     void setMaxSpeed(double max_speed) {
@@ -2097,10 +2186,6 @@ public:
         return FireChance;
     }
 
-    double getWeight()const {
-        return weight;
-    }
-
     double getMaxSpeed()const {
         return MaxSpeed;
     }
@@ -2118,49 +2203,68 @@ public:
         os<<"MOTOR : " << std::endl;
         os << "Power : " << m.power << std::endl;
         os << "Fire chance: " << m.FireChance << std::endl;
-        os << "Weight: " << m.weight << std::endl;
         os << "Max speed: " << m.MaxSpeed << std::endl;
         os << "Max reverse speed: " << m.MaxReverseSpeed << std::endl;
         os << "Number of gears: " << m.NumberOfGears << std::endl;
+        os << "Health : " << m.health << std::endl;
+        os << "Weight : " << m.weight << std::endl;
+        os << "Heigth : " << m.heigth << std::endl;
+        os << "Surface :" << m.surface << std::endl;
+        os << "Volume : " << m.volume << std::endl;
         return os;
     }
 
+    private:
+        void Fire() {
+
+        }
+
 };
 
-class Dome {
+class Dome : public TankModuo{
 
 private:
 
     double Armor;
     double Rotation; // u stepenima
     double ViewRange;
-    double health;
-    double weight;
 
 public:
 
     Dome() {
+
+        health = 600;
+        weight = 124.532;
+        heigth = 1.35;
+        surface = 311.50;
+        volume = 41;
         Armor = 459.32;
         Rotation = 276.31;
         ViewRange = 5043.245;
-        health = 500.69;
-        weight = 320.4321;
     }
 
-    Dome(double armor, double RRotation, double View_Range, double Health, double Weight) {
+    Dome(double armor, double RRotation, double View_Range, double health_, double weight_, double heigth_, double surface_, double volume_) {
+        
+        health = health_;
+        weight = weight_;
+        heigth = heigth_;
+        surface = surface_;
+        volume = volume_;
         Armor = armor;
         Rotation = RRotation;
         ViewRange = View_Range;
-        health = Health;
-        weight = Weight;
     }
 
     Dome(Dome& dome) {
+
+        health = dome.health;
+        weight = dome.weight;
+        heigth = dome.heigth;
+        surface = dome.surface;
+        volume = dome.volume;
         Armor = dome.Armor;
         Rotation = dome.Rotation;
         ViewRange = dome.ViewRange;
-        health = dome.health;
-        weight = dome.weight;
     }
 
     void setArmor(double armor) {
@@ -2175,14 +2279,6 @@ public:
         ViewRange = view_range;
     }
 
-    void setHealth(double Health) {
-        health = Health;
-    }
-
-    void setWeight(double Weight) {
-        weight = Weight;
-    }
-
     double getArmor()const {
         return Armor;
     }
@@ -2195,14 +2291,6 @@ public:
         return ViewRange;
     }
 
-    double getHealth()const {
-        return health;
-    }
-
-    double getWeight()const {
-        return weight;
-    }
-
     friend std::ostream& operator<<(std::ostream& os, const Dome& d) {
 
         os << "DOME: " << std::endl;
@@ -2210,23 +2298,29 @@ public:
         os << "Rotation : " << d.Rotation << std::endl;
         os << "View range: " << d.ViewRange << std::endl;
         os << "Health : " << d.health << std::endl;
-        os << "Weight: " << d.weight << std::endl;
+        os << "Weight : " << d.weight << std::endl;
+        os << "Heigth : " << d.heigth << std::endl;
+        os << "Surface :" << d.surface << std::endl;
+        os << "Volume : " << d.volume << std::endl;
         return os;
+    }
+
+private:
+    void Fire() {
+
     }
 
 };
 
-class Gun{
+class Gun : public TankModuo{
  
 private:
 
-    double volume;
     double RateOfFire;
     double Penetration;
     double damage;
     double DispresionAt100m;
     double AimTime;
-    double Weight;
     double Accuracy;
     double RoundsMin;
     double Reload;
@@ -2235,28 +2329,35 @@ private:
 public:
 
     Gun() {
-        volume = 67.43;
+        
+        health = 2000;
+        weight = 141.56;
+        heigth = 1.010;
+        surface = 670;
+        volume = 900;
         RateOfFire = 228.59;
         Penetration = 320.56;
         damage = 450.98;
         DispresionAt100m = 0.5;
         AimTime = 14.16;
-        Weight = 150.44;
         Accuracy = 78.22;
         RoundsMin = 2;
         Reload = 16.14;
         Grenade = GrenadeType::APCR;
     }
 
-    Gun(double Volume, double rate_of_fire, double penetration, double Damage, double Dispresion_at_100m, double aim_time, double weight, double accuracy, double rounds_min, double reload, GrenadeType grenade) {
+    Gun(double rate_of_fire, double penetration, double Damage, double Dispresion_at_100m, double aim_time, double accuracy, double rounds_min, double reload, GrenadeType grenade, double health_, double heigth_, double weight_, double surface_, double volume_) {
 
-        volume = Volume;
+        health = health_;
+        weight = weight_;
+        heigth = heigth_;
+        surface = surface_;
+        volume = volume_;
         RateOfFire = rate_of_fire;
         Penetration = penetration;
         damage = Damage;
         DispresionAt100m = Dispresion_at_100m;
         AimTime = aim_time;
-        Weight = weight;
         Accuracy = accuracy;
         RoundsMin = rounds_min;
         Reload = reload;
@@ -2265,21 +2366,20 @@ public:
 
     Gun(Gun& gun) {
 
+        health = gun.health;
+        weight = gun.weight;
+        heigth = gun.heigth;
+        surface = gun.surface;
         volume = gun.volume;
         RateOfFire = gun.RateOfFire;
         Penetration = gun.Penetration;
         damage = gun.damage;
         DispresionAt100m = gun.DispresionAt100m;
         AimTime = gun.AimTime;
-        Weight = gun.Weight;
         Accuracy = gun.Accuracy;
         RoundsMin = gun.RoundsMin;
         Reload = gun.Reload;
         Grenade = gun.Grenade;
-    }
-
-    void setVolume(double Volume) {
-        volume = Volume;
     }
 
     void setRateOfFire(double rate_of_fire) {
@@ -2302,10 +2402,6 @@ public:
         AimTime = aim_time;
     }
 
-    void setWeight(double weight) {
-        Weight = weight;
-    }
-
     void setAccuracy(double accuracy) {
         Accuracy = accuracy;
     }
@@ -2320,10 +2416,6 @@ public:
 
     void setGrenade(GrenadeType grenade) {
         Grenade = grenade;
-    }
-
-    double getVolume()const {
-        return volume;
     }
 
     double getRateOfFire()const {
@@ -2346,10 +2438,6 @@ public:
         return AimTime;
     }
 
-    double getWeight()const {
-        return Weight;
-    }
-
     double getAccuracy()const {
         return Accuracy;
     }
@@ -2369,13 +2457,11 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Gun& g) {
 
         os << "GUN: " << std::endl;
-        os << "Volume: " << g.volume << std::endl;
         os << "Rate of fire: " << g.RateOfFire << std::endl;
         os << "Penetration: " << g.Penetration << std::endl;
         os << "Damage : " << g.damage;
         os << "Dispresion at 100 m : " << g.DispresionAt100m << std::endl;
         os << "Aim time : " << g.AimTime << std::endl;
-        os << "Weight : " << g.Weight << std::endl;
         os << "Accuracy : " << g.Accuracy << std::endl;
         os << "Rounds per min : " << g.RoundsMin << std::endl;
         os << "Reload : " << g.Reload << std::endl;
@@ -2399,11 +2485,20 @@ public:
             os << "HESH" << std::endl;
             break;
         }
+        os << "Health : " << g.health << std::endl;
+        os << "Weight : " << g.weight << std::endl;
+        os << "Heigth : " << g.heigth << std::endl;
+        os << "Surface :" << g.surface << std::endl;
+        os << "Volume : " << g.volume << std::endl;
 
         return os;
     }
-};
 
+    private:
+    void Fire() {
+
+    }
+};
 
 
 class Tank{
@@ -2629,9 +2724,6 @@ public:
         return os;
     }
         
-        
-    
-
 };
 
 class Platoon {
@@ -3098,7 +3190,7 @@ public:
         score_board = ScoreBoard();
     }
 
-    Matchmaking(int base_capture_points_team1, int base_capture_points_team2, int base_defense_points_team1, int base_defense_points_team2, int NNumberOfEnemyVehiclesSpotted_team1, int NNumberOfEnemyVehiclesSpotted_team2, double NNumberOfEnemyVehiclesDestroyed_team1, double NNumberOfEnemyVehiclesDestroyed_team2, double AAverageDamageInBattle_team1, double AAverageDamageInBattle_team2, double AAverageExperienceInBattle_team1, double AAverageExperienceInBattle_team2, double MMaxExperienceInBattle_team1, double MMaxExperienceInBattle_team2, double MMaxDamageInBattle_team1, double MMaxDamageInBattle_team2, ScoreBoard score_board_){
+    Matchmaking(int base_capture_points_team1, int base_capture_points_team2, int base_defense_points_team1, int base_defense_points_team2, int NNumberOfEnemyVehiclesSpotted_team1, int NNumberOfEnemyVehiclesSpotted_team2, int NNumberOfEnemyVehiclesDestroyed_team1, int NNumberOfEnemyVehiclesDestroyed_team2, double AAverageDamageInBattle_team1, double AAverageDamageInBattle_team2, double AAverageExperienceInBattle_team1, double AAverageExperienceInBattle_team2, double MMaxExperienceInBattle_team1, double MMaxExperienceInBattle_team2, double MMaxDamageInBattle_team1, double MMaxDamageInBattle_team2, ScoreBoard score_board_){
 
         BaseCapturePoints_team1 = base_capture_points_team1;
         BaseCapturePoints_team2 = base_capture_points_team2;
